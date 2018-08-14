@@ -1,0 +1,5 @@
+---
+applications:
+- name: mooderator-api
+  path: ./build/libs/mooderator-api-0.0.1-SNAPSHOT.jar
+  memory: 1024M
