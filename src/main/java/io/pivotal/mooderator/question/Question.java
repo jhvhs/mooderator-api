@@ -9,5 +9,6 @@ import lombok.Setter;
 @Setter
 public class Question {
 
+    private Long id;
     private String sentence;
 }
