@@ -4,7 +4,6 @@ import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.http.ResponseEntity
 import spock.lang.Specification
 
 import static org.springframework.http.HttpStatus.OK
@@ -18,7 +17,7 @@ class QuestionsTests extends Specification {
     @Test
     def "Should return question"() {
         when:
-        ResponseEntity<Map> response = restTemplate.getForEntity("/questions/latest", Map.class)
+        def response = restTemplate.getForEntity("/questions/latest", Map.class)
 
         then:
         response.getStatusCode() == OK
