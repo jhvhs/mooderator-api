@@ -24,10 +24,10 @@ class QuestionsTests extends Specification {
         def body = response.getBody()
         body['id'] != null
         body['sentence'] == 'is this a question?'
-        body['answers'].size() == 2
-        body['answers'][0]['id'] == 1
-        body['answers'][0]['value'] == 'yes'
-        body['answers'][1]['id'] == 2
-        body['answers'][1]['value'] == 'no'
+        body.answers.size() == 2
+        body.answers[0].id == 1
+        body.answers[0].value == 'yes'
+        body.answers[1].id == 2
+        body.answers[1].value == 'no'
     }
 }
