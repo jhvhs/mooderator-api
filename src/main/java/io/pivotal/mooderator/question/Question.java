@@ -4,11 +4,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @EqualsAndHashCode
 @Getter
 @Setter
-public class Question {
+class Question {
 
     private Long id;
     private String sentence;
+    private List<Answer> answers;
 }
