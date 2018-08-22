@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @EqualsAndHashCode
@@ -17,6 +18,7 @@ class Question {
     @Id
     private Long id;
 
+    @NotNull
     @Column
     private String sentence;
 

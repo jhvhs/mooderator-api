@@ -38,3 +38,22 @@ databaseChangeLog:
             - column:
                 name: answers_id
                 type: bigint
+    - createTable:
+            tableName: result
+            columns:
+            - column:
+                autoIncrement: true
+                constraints:
+                  primaryKey: true
+                  primaryKeyName: result_pkey
+                name: id
+                type: bigint
+            - column:
+                name: question_id
+                type: bigint
+            - column:
+                name: question
+                type: VARCHAR(255)
+            - column:
+                name: answer
+                type: VARCHAR(255)

@@ -2,15 +2,21 @@ package io.pivotal.mooderator.integration
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.pivotal.mooderator.result.ResultController
+import io.pivotal.mooderator.result.ResultRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.boot.test.context.TestConfiguration
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Import
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
+import spock.mock.DetachedMockFactory
 
 import static org.springframework.http.MediaType.APPLICATION_JSON
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
+@Import([IntegrationTestMockingConfig])
 @WebMvcTest(value = [ResultController])
 class ResultsValidation extends Specification {
 
@@ -41,5 +47,15 @@ class ResultsValidation extends Specification {
                 .content(mapper.writeValueAsString([questionId: 1L, question: "question", answer: "answer"]))
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isCreated())
+    }
+}
+
+@TestConfiguration
+class IntegrationTestMockingConfig {
+    private DetachedMockFactory factory = new DetachedMockFactory()
+
+    @Bean
+    ResultRepository resultRepository() {
+        factory.Mock(ResultRepository)
     }
 }
