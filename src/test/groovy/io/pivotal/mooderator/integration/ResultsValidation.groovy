@@ -2,7 +2,7 @@ package io.pivotal.mooderator.integration
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.pivotal.mooderator.result.ResultController
-import io.pivotal.mooderator.result.ResultRepository
+import io.pivotal.mooderator.result.ResultService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.context.TestConfiguration
@@ -55,7 +55,7 @@ class IntegrationTestMockingConfig {
     private DetachedMockFactory factory = new DetachedMockFactory()
 
     @Bean
-    ResultRepository resultRepository() {
-        factory.Mock(ResultRepository)
+    ResultService resultRepository() {
+        factory.Mock(ResultService)
     }
 }

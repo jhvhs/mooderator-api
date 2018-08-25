@@ -20,29 +20,29 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @RestController
 public class ResultController {
 
-    private final ResultRepository resultRepository;
+    private final ResultService resultService;
 
-    public ResultController(ResultRepository resultRepository) {
-        this.resultRepository = resultRepository;
+    public ResultController(ResultService resultService) {
+        this.resultService = resultService;
     }
 
     @ResponseStatus(CREATED)
     @PostMapping
     @ResponseBody
     public Result saveResult(@Valid @RequestBody Result result) {
-        return resultRepository.save(result);
+        return resultService.save(result);
     }
 
     @GetMapping
     @ResponseBody
     public List<Result> getResults() {
-        return resultRepository.findAll();
+        return resultService.loadAll();
     }
 
     @Profile("test")
     @ResponseStatus(NO_CONTENT)
     @DeleteMapping
     public void deleteResults() {
-        resultRepository.deleteAll();
+        resultService.clearAll();
     }
 }

@@ -57,3 +57,30 @@ databaseChangeLog:
             - column:
                 name: answer
                 type: VARCHAR(255)
+            - column:
+                name: sent_date
+                type: datetime
+    - addNotNullConstraint:
+        columnDataType: VARCHAR
+        columnName: sentence
+        tableName: question
+    - addNotNullConstraint:
+        columnDataType: VARCHAR
+        columnName: value
+        tableName: answer
+    - addNotNullConstraint:
+        columnDataType: bigint
+        columnName: question_id
+        tableName: result
+    - addNotNullConstraint:
+        columnDataType: VARCHAR
+        columnName: question
+        tableName: result
+    - addNotNullConstraint:
+        columnDataType: VARCHAR
+        columnName: answer
+        tableName: result
+    - addNotNullConstraint:
+        columnDataType: datetime
+        columnName: sent_date
+        tableName: result

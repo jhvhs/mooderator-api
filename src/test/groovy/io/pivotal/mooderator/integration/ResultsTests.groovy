@@ -54,6 +54,7 @@ class ResultsTests extends Specification {
         response.body[0].questionId == requestBody.questionId
         response.body[0].question == requestBody.question
         response.body[0].answer == requestBody.answer
+        response.body[0].sentDate != null
     }
 
     private ResponseEntity<Map> postResult() {
