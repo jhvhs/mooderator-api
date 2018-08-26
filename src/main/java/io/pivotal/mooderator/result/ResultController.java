@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -44,5 +45,11 @@ public class ResultController {
     @DeleteMapping
     public void deleteResults() {
         resultService.clearAll();
+    }
+
+    @RequestMapping("/now")
+    @ResponseBody
+    public LocalDateTime getNow() {
+        return LocalDateTime.now();
     }
 }
