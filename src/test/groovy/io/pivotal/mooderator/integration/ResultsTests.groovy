@@ -13,7 +13,7 @@ import static org.springframework.http.HttpStatus.OK
 class ResultsTests extends Specification {
 
     @Autowired
-    private TestRestTemplate restTemplate
+    TestRestTemplate restTemplate
 
     def requestBody = [
             questionId: 1L,
