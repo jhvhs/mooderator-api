@@ -19,10 +19,11 @@ public class AppStartupRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         Question question = new Question();
         question.setId(1L);
-        question.setSentence("is this a question?");
+        question.setSentence("How was your day in the office?");
         question.setAnswers(
-                asList(new Answer(1L, "yes"),
-                        new Answer(2L, "no"))
+                asList(new Answer(1L, "Good"),
+                        new Answer(2L, "So so"),
+                        new Answer(3L, "Bad"))
         );
 
         questionRepository.save(question);

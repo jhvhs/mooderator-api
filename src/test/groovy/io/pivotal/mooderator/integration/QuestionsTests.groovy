@@ -23,11 +23,13 @@ class QuestionsTests extends Specification {
         response.getStatusCode() == OK
         def body = response.getBody()
         body['id'] != null
-        body['sentence'] == 'is this a question?'
-        body.answers.size() == 2
+        body['sentence'] == 'How was your day in the office?'
+        body.answers.size() == 3
         body.answers[0].id == 1
-        body.answers[0].value == 'yes'
+        body.answers[0].value == 'Good'
         body.answers[1].id == 2
-        body.answers[1].value == 'no'
+        body.answers[1].value == 'So so'
+        body.answers[2].id == 3
+        body.answers[2].value == 'Bad'
     }
 }
