@@ -12,14 +12,15 @@ import static org.springframework.http.HttpStatus.OK
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ResultsTests extends Specification {
 
-    @Autowired
-    TestRestTemplate restTemplate
-
     def requestBody = [
             questionId: 1L,
             question  : "a question",
+            answerId   : 100L,
             answer    : "yes"
     ]
+
+    @Autowired
+    TestRestTemplate restTemplate
 
     void cleanup() {
         restTemplate.delete("/results")
@@ -54,6 +55,7 @@ class ResultsTests extends Specification {
         response.body[0].id != null
         response.body[0].questionId == requestBody.questionId
         response.body[0].question == requestBody.question
+        response.body[0].answerId == requestBody.answerId
         response.body[0].answer == requestBody.answer
         response.body[0].sentDate != null
     }

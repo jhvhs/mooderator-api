@@ -34,17 +34,18 @@ class ResultsValidation extends Specification {
                 .andExpect(status().isBadRequest())
 
         where:
-        body                                     | _
-        []                                       | _
-        [question: "question", answer: "answer"] | _
-        [questionId: 1L, answer: "answer"]       | _
-        [questionId: 1L, question: "question"]   | _
+        body                                                                     | _
+        []                                                                       | _
+        [question: "question", answerId: 100L, answer: "answer"]                 | _
+        [questionId: 1L, answerId: 100L, answer: "answer"]                       | _
+        [questionId: 1L, question: "question", answerId: 100L,]                  | _
+        [questionId: 1L, question: "question", answer: "answer"] | _
     }
 
     def "Should accept a valid body"() {
         expect:
         mvc.perform(post("/results")
-                .content(mapper.writeValueAsString([questionId: 1L, question: "question", answer: "answer"]))
+                .content(mapper.writeValueAsString([questionId: 1L, question: "question", answerId: 100L, answer: "answer"]))
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isCreated())
     }

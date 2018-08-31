@@ -32,6 +32,10 @@ public class Result {
 
     @Column
     @NotNull
+    private Long answerId;
+
+    @Column
+    @NotNull
     private String answer;
 
     @Column
