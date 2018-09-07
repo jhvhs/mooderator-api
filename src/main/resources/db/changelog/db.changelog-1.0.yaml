@@ -16,6 +16,8 @@ databaseChangeLog:
         - column:
             name: sentence
             type: VARCHAR(255)
+            constraints:
+                nullable: false
     - createTable:
         tableName: answer
         columns:
@@ -29,15 +31,21 @@ databaseChangeLog:
         - column:
             name: value
             type: VARCHAR(255)
+            constraints:
+                nullable: false
     - createTable:
         tableName: question_answers
         columns:
         - column:
             name: question_id
             type: bigint
+            constraints:
+                nullable: false
         - column:
             name: answers_id
             type: bigint
+            constraints:
+                nullable: false
     - createTable:
         tableName: result
         columns:
@@ -51,43 +59,25 @@ databaseChangeLog:
         - column:
             name: question_id
             type: bigint
+            constraints:
+                nullable: false
         - column:
             name: question
             type: VARCHAR(255)
+            constraints:
+                nullable: false
         - column:
             name: answer_id
             type: bigint
+            constraints:
+                nullable: false
         - column:
             name: answer
             type: VARCHAR(255)
+            constraints:
+                nullable: false
         - column:
             name: sent_date
             type: datetime
-    - addNotNullConstraint:
-        columnDataType: VARCHAR
-        columnName: sentence
-        tableName: question
-    - addNotNullConstraint:
-        columnDataType: VARCHAR
-        columnName: value
-        tableName: answer
-    - addNotNullConstraint:
-        columnDataType: bigint
-        columnName: question_id
-        tableName: result
-    - addNotNullConstraint:
-        columnDataType: VARCHAR
-        columnName: question
-        tableName: result
-    - addNotNullConstraint:
-        columnDataType: bigint
-        columnName: answer_id
-        tableName: result
-    - addNotNullConstraint:
-        columnDataType: VARCHAR
-        columnName: answer
-        tableName: result
-    - addNotNullConstraint:
-        columnDataType: datetime
-        columnName: sent_date
-        tableName: result
+            constraints:
+                nullable: false
