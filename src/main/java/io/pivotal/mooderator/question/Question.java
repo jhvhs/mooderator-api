@@ -22,9 +22,11 @@ class Question {
     @Column
     private String sentence;
 
+    @NotNull
     @OneToMany(
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
     private List<Answer> answers;
 }

@@ -1,9 +1,13 @@
 package io.pivotal.mooderator.question;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
+@RequestMapping("/questions")
 public class QuestionController {
 
     private QuestionRepository questionRepository;
@@ -12,9 +16,14 @@ public class QuestionController {
         this.questionRepository = questionRepository;
     }
 
-    @GetMapping("/questions/latest")
+    @GetMapping("/latest")
     public Question getLatestQuestion() {
         return questionRepository.findAll().get(0);
     }
 
+    @PostMapping
+    @ResponseStatus(CREATED)
+    public Question storeQuestion(@RequestBody @Valid Question question) {
+        return questionRepository.save(question);
+    }
 }
