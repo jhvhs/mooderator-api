@@ -26,9 +26,10 @@ class QuestionsTests extends Specification {
         response.body.answers.size() == 3
     }
 
-    def "Should return question"() {
+    def "Should return the last saved question"() {
         given:
         createQuestion()
+        createQuestion('are you sure?')
 
         when:
         def response = restTemplate.getForEntity("/questions/latest", Map.class)
@@ -37,18 +38,18 @@ class QuestionsTests extends Specification {
         response.getStatusCode() == OK
         def body = response.getBody()
         body['id'] != null
-        body['sentence'] == 'is this a question?'
+        body['sentence'] == 'are you sure?'
         body.answers.size() == 3
-        body.answers[0].id == 1
+        body.answers[0].id != null
         body.answers[0].value == 'yes'
-        body.answers[1].id == 2
+        body.answers[1].id != null
         body.answers[1].value == 'maybe'
-        body.answers[2].id == 3
+        body.answers[2].id != null
         body.answers[2].value == 'no'
     }
 
-    private ResponseEntity createQuestion(){
-        def question = ['sentence' : 'is this a question?', answers: [
+    private ResponseEntity createQuestion(sentence = 'is this a question?'){
+        def question = ['sentence' : sentence, answers: [
                 ['value' : 'yes'],
                 ['value' : 'maybe'],
                 ['value' : 'no']

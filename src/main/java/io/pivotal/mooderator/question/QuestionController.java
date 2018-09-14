@@ -18,7 +18,7 @@ public class QuestionController {
 
     @GetMapping("/latest")
     public Question getLatestQuestion() {
-        return questionRepository.findAll().get(0);
+        return questionRepository.findAllByOrderByIdDesc().get(0);
     }
 
     @PostMapping
