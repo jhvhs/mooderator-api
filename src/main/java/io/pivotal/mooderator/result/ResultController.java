@@ -39,6 +39,12 @@ public class ResultController {
         return resultService.loadAll();
     }
 
+    @GetMapping("/statistics")
+    @ResponseBody
+    public List<SurveyAnswerStatistics> getSurveyStatistics() {
+        return resultService.loadStatistics();
+    }
+
     @Profile("test")
     @ResponseStatus(NO_CONTENT)
     @DeleteMapping

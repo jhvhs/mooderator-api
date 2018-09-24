@@ -60,6 +60,22 @@ class ResultsTests extends Specification {
         response.body[0].sentDate != null
     }
 
+    def "Should return aggregated results"() {
+        given:
+        def response = postResult()
+
+        when:
+        response = restTemplate.getForEntity("/results/statistics", List.class)
+
+        then:
+        response.statusCode == OK
+        response.body.size() == 1
+        response.body[0].questionId == requestBody.questionId
+        response.body[0].question == requestBody.question
+        response.body[0].answer == requestBody.answer
+        response.body[0].count == 1
+    }
+
     private ResponseEntity<Map> postResult() {
         restTemplate.postForEntity("/results", requestBody, Map.class)
     }

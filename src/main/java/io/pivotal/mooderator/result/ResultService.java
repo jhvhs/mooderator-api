@@ -28,4 +28,9 @@ public class ResultService {
     public void clearAll() {
         repository.deleteAll();
     }
+
+    public List<SurveyAnswerStatistics> loadStatistics() {
+        repository.find
+        return repository.findSurveyStatistics();
+    }
 }
