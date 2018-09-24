@@ -10,20 +10,20 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequestMapping("/questions")
 public class QuestionController {
 
-    private QuestionRepository questionRepository;
+    private QuestionService questionService;
 
-    public QuestionController(QuestionRepository questionRepository) {
-        this.questionRepository = questionRepository;
+    public QuestionController(QuestionService questionService) {
+        this.questionService = questionService;
     }
 
     @GetMapping("/latest")
     public Question getLatestQuestion() {
-        return questionRepository.findAllByOrderByIdDesc().get(0);
+        return questionService.findLastQuestion();
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
     public Question storeQuestion(@RequestBody @Valid Question question) {
-        return questionRepository.save(question);
+        return questionService.save(question);
     }
 }

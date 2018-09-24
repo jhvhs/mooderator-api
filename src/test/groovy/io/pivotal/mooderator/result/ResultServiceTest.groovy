@@ -1,17 +1,21 @@
 package io.pivotal.mooderator.result
 
+import io.pivotal.mooderator.question.Question
+import io.pivotal.mooderator.question.QuestionService
 import spock.lang.Specification
 
 import java.time.LocalDateTime
 
 class ResultServiceTest extends Specification {
 
+    QuestionService questionService
     ResultRepository resultRepository
     ResultService service
 
     void setup() {
+        questionService = Mock(QuestionService)
         resultRepository = Mock(ResultRepository)
-        service = new ResultService(resultRepository)
+        service = new ResultService(resultRepository, questionService)
     }
 
     def "Should return all results"() {
@@ -44,6 +48,20 @@ class ResultServiceTest extends Specification {
             expectedResult
         }
         savedResult == expectedResult
+    }
+
+    def "Should return the statistics"() {
+        given:
+        def question = new Question(id: 1L)
+        def expectedStatistics = [new SurveyAnswerStatistics()]
+
+        when:
+        def statistics = service.loadStatistics()
+
+        then:
+        1 * questionService.findLastQuestion() >> question
+        1 * resultRepository.findSurveyStatistics(question.id) >> expectedStatistics
+        statistics == expectedStatistics
     }
 
     def "Should delete all results"() {
