@@ -8,17 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ResultRepository extends JpaRepository<Result, Long> {
-//
-//    @Query(nativeQuery = true, value =
-//            "SELECT " +
-//                    "    v.answer AS answer, COUNT(v) AS cnt " +
-//                    "FROM " +
-//                    "    Survey v " +
-//                    "GROUP BY " +
-//                    "    v.answer")
-
-
-    @Query(value = "select question, question_id, answer, COUNT(r) as results from result r where question_id = ?1 group by answer")
+    @Query(value = "select new io.pivotal.mooderator.result.SurveyAnswerStatistics(r.question, r.questionId, r.answer, COUNT(r) AS results) from Result r where r.questionId = ?1 group by r.answer")
     List<SurveyAnswerStatistics> findSurveyStatistics(Long questionId);
-
 }

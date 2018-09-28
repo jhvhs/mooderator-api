@@ -3,9 +3,9 @@ package io.pivotal.mooderator.integration
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.http.ResponseEntity
 import spock.lang.Specification
 
+import static io.pivotal.mooderator.integration.IntegrationTestsUtils.postResult
 import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.OK
 
@@ -28,7 +28,7 @@ class ResultsTests extends Specification {
 
     def "Should save a result"() {
         when:
-        def response = postResult()
+        def response = postResult(restTemplate, requestBody)
 
         then:
         response.statusCode == CREATED
@@ -41,7 +41,7 @@ class ResultsTests extends Specification {
 
     def "Should return saved results"() {
         when:
-        def response = postResult()
+        def response = postResult(restTemplate, requestBody)
 
         then:
         response.statusCode == CREATED
@@ -58,25 +58,5 @@ class ResultsTests extends Specification {
         response.body[0].answerId == requestBody.answerId
         response.body[0].answer == requestBody.answer
         response.body[0].sentDate != null
-    }
-
-    def "Should return aggregated results"() {
-        given:
-        def response = postResult()
-
-        when:
-        response = restTemplate.getForEntity("/results/statistics", List.class)
-
-        then:
-        response.statusCode == OK
-        response.body.size() == 1
-        response.body[0].questionId == requestBody.questionId
-        response.body[0].question == requestBody.question
-        response.body[0].answer == requestBody.answer
-        response.body[0].count == 1
-    }
-
-    private ResponseEntity<Map> postResult() {
-        restTemplate.postForEntity("/results", requestBody, Map.class)
     }
 }
