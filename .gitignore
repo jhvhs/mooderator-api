@@ -26,3 +26,5 @@
 /.nb-gradle/
 
 .envrc
+
+ci/credentials.yml
