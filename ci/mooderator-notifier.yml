@@ -1,23 +1,25 @@
 resources:
-- name: every-morning
-  type: time
-  source:
-    start: 6:00 PM
-    stop: 7:00 PM
-    location: Europe/Dublin
-    days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+#- name: every-morning
+#  type: time
+#  source:
+#    start: 6:00 PM
+#    stop: 7:00 PM
+#    location: Europe/Dublin
+#    days: [Monday, Tuesday, Wednesday, Thursday, Friday]
 
 - name: mooderator-api
   type: git
   source:
     uri: git@github.com:bu3/mooderator-api.git
     branch: master
-    private_key: ((git-ssh-key.private_key))
+    private_key: ((publishing-outputs-private-key))
 
 jobs:
 - name: slack-stats
   plan:
-  - get: every-morning
+#  - get: every-morning
+#    trigger: true
+  - get: mooderator-api
     trigger: true
   - task: slack-stats
     file: mooderator-api/ci/slack-stats.yml

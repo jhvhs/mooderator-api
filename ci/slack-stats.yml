@@ -4,5 +4,10 @@ image_resource:
   source:
     repository: concourse/git-resource
     tag: latest
+
 run:
   path: mooderator-api/ci/slack.sh
+
+inputs:
+  - name: mooderator-api
+
