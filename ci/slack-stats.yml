@@ -11,4 +11,6 @@ run:
 inputs:
   - name: mooderator-api
 
+params:
+  WEBHOOK_SUFFIX: ((webhook_suffix))
 

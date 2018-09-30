@@ -23,5 +23,3 @@ jobs:
     trigger: true
   - task: slack-stats
     file: mooderator-api/ci/slack-stats.yml
-  - params:
-      WEBHOOK_SUFFIX: ((webhook_suffix))
