@@ -1,11 +1,11 @@
 resources:
-#- name: every-morning
-#  type: time
-#  source:
-#    start: 6:00 PM
-#    stop: 7:00 PM
-#    location: Europe/Dublin
-#    days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+- name: every-working-day
+  type: time
+  source:
+    start: 9:00 AM
+    stop: 10:00 AM
+    location: Europe/Dublin
+    days: [Monday, Tuesday, Wednesday, Thursday, Friday]
 
 - name: mooderator-api
   type: git
@@ -17,8 +17,8 @@ resources:
 jobs:
 - name: slack-stats
   plan:
-#  - get: every-morning
-#    trigger: true
+  - get: every-working-day
+    trigger: true
   - get: mooderator-api
     trigger: true
   - task: slack-stats
