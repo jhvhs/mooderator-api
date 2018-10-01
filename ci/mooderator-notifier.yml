@@ -1,0 +1,27 @@
+resources:
+- name: every-working-day
+  type: time
+  source:
+    start: 9:00 AM
+    stop: 10:00 AM
+    location: Europe/Dublin
+    days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+
+- name: mooderator-api
+  type: git
+  source:
+    uri: git@github.com:bu3/mooderator-api.git
+    branch: master
+    private_key: ((publishing-outputs-private-key))
+
+jobs:
+- name: slack-stats
+  plan:
+  - get: every-working-day
+    trigger: true
+  - get: mooderator-api
+    trigger: true
+  - task: slack-stats
+    file: mooderator-api/ci/slack-stats.yml
+    params:
+      WEBHOOK_SUFFIX: ((webhook_suffix))
