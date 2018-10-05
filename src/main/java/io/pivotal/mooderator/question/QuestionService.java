@@ -2,6 +2,8 @@ package io.pivotal.mooderator.question;
 
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class QuestionService {
 
@@ -19,4 +21,7 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
+    public List<Question> loadQuestions() {
+        return questionRepository.findAllByOrderByIdDesc();
+    }
 }

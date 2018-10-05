@@ -13,7 +13,7 @@ import static org.springframework.http.HttpStatus.OK
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-class StatisticsSpec extends Specification {
+class StatisticsIntegrationSpec extends Specification {
 
     def question = ['sentence': 'questions????', answers: [
             ['value': 'yes'],

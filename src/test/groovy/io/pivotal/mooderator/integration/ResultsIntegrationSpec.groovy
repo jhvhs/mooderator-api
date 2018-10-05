@@ -10,7 +10,7 @@ import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.OK
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ResultsTests extends Specification {
+class ResultsIntegrationSpec extends Specification {
 
     def requestBody = [
             questionId: 1L,
@@ -32,7 +32,7 @@ class ResultsTests extends Specification {
 
         then:
         response.statusCode == CREATED
-        response.body.id == 1L
+        response.body.id != null
         response.body.questionId == requestBody.questionId
         response.body.question == requestBody.question
         response.body.answer == requestBody.answer
