@@ -1,0 +1,2 @@
+cf service-key m00derator EXTERNAL-ACCESS-KEY
+cf ssh -L 63306:us-cdbr-iron-east-01.cleardb.net:3306
