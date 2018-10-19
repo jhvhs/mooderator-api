@@ -27,11 +27,6 @@ public class QuestionController {
         return questionService.loadQuestions();
     }
 
-    @GetMapping("/latest")
-    public Question getLatestQuestion() {
-        return questionService.findLastQuestion();
-    }
-
     @PostMapping
     @ResponseStatus(CREATED)
     public Question storeQuestion(@RequestBody @Valid Question question) {

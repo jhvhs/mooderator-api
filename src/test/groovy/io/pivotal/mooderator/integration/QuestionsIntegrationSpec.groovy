@@ -26,28 +26,6 @@ class QuestionsIntegrationSpec extends Specification {
         response.body.answers.size() == 3
     }
 
-    def "Should return the last saved question"() {
-        given:
-        createQuestion()
-        createQuestion('are you sure?')
-
-        when:
-        def response = restTemplate.getForEntity("/questions/latest", Map.class)
-
-        then:
-        response.getStatusCode() == OK
-        def body = response.getBody()
-        body['id'] != null
-        body['sentence'] == 'are you sure?'
-        body.answers.size() == 3
-        body.answers[0].id != null
-        body.answers[0].value == 'yes'
-        body.answers[1].id != null
-        body.answers[1].value == 'maybe'
-        body.answers[2].id != null
-        body.answers[2].value == 'no'
-    }
-
     def "Should return all questions"() {
         given:
         createQuestion('is this second to last?')
