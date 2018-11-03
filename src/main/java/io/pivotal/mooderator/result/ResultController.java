@@ -45,6 +45,12 @@ public class ResultController {
         return resultService.loadStatistics();
     }
 
+    @GetMapping("/daily-statistics")
+    @ResponseBody
+    public List<SurveyAnswerStatistics> getSurveyDailyStatistics() {
+        return resultService.loadDailyStatistics();
+    }
+
     @Profile("test")
     @ResponseStatus(NO_CONTENT)
     @DeleteMapping

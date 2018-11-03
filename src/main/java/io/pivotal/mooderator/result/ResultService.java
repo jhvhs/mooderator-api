@@ -35,4 +35,8 @@ public class ResultService {
     public List<SurveyAnswerStatistics> loadStatistics() {
         return repository.findSurveyStatistics(questionService.findLastQuestion().getId());
     }
+
+    public List<SurveyAnswerStatistics> loadDailyStatistics() {
+        return repository.findSurveyStatisticsPerDay(questionService.findLastQuestion().getId());
+    }
 }

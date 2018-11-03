@@ -1,11 +1,23 @@
 package io.pivotal.mooderator.result;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class SurveyAnswerStatistics {
 
     private String question;
     private Long questionId;
     private String answer;
     private Long results;
+    private LocalDate day;
+
+    public SurveyAnswerStatistics(String question, Long questionId, String answer, Long results, Date day) {
+        this.question = question;
+        this.questionId = questionId;
+        this.answer = answer;
+        this.results = results;
+        this.day = ((java.sql.Date)day).toLocalDate();
+    }
 
     public SurveyAnswerStatistics(String question, Long questionId, String answer, Long results) {
         this.question = question;
@@ -46,5 +58,13 @@ public class SurveyAnswerStatistics {
 
     public void setResults(Long results) {
         this.results = results;
+    }
+
+    public LocalDate getDay() {
+        return day;
+    }
+
+    public void setDay(LocalDate day) {
+        this.day = day;
     }
 }

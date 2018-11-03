@@ -50,7 +50,7 @@ class ResultServiceTest extends Specification {
         savedResult == expectedResult
     }
 
-    def "Should return the statistics"() {
+    def "Should return statistics"() {
         given:
         def question = new Question(id: 1L)
         def expectedStatistics = [new SurveyAnswerStatistics()]
@@ -61,6 +61,20 @@ class ResultServiceTest extends Specification {
         then:
         1 * questionService.findLastQuestion() >> question
         1 * resultRepository.findSurveyStatistics(question.id) >> expectedStatistics
+        statistics == expectedStatistics
+    }
+
+    def "Should return daily statistics"() {
+        given:
+        def question = new Question(id: 1L)
+        def expectedStatistics = [new SurveyAnswerStatistics()]
+
+        when:
+        def statistics = service.loadDailyStatistics()
+
+        then:
+        1 * questionService.findLastQuestion() >> question
+        1 * resultRepository.findSurveyStatisticsPerDay(question.id) >> expectedStatistics
         statistics == expectedStatistics
     }
 
