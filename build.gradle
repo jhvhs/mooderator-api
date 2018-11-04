@@ -1,3 +1,6 @@
+import com.wix.mysql.EmbeddedMysql
+import com.wix.mysql.distribution.Version
+
 buildscript {
     ext {
         springBootVersion = '2.0.4.RELEASE'
@@ -7,6 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath('com.wix:wix-embedded-mysql:4.2.0')
     }
 }
 
@@ -23,6 +27,25 @@ repositories {
     mavenCentral()
 }
 
+
+def mysql
+
+task startMysql {
+    mysql = EmbeddedMysql.anEmbeddedMysql(Version.v5_7_latest)
+            .addSchema("acme")
+            .start()
+}
+
+task stopMysql {
+    doLast {
+        if(mysql != null) {
+            mysql.stop()
+        }
+    }
+}
+
+test.dependsOn startMysql
+test.finalizedBy stopMysql
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
