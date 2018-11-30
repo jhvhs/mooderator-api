@@ -36,8 +36,14 @@ main() {
         msg="No votes entered :sleeping: :zzz: "
     fi
 
-    request_body="\"${day}: ${msg//\"}\""
-    curl -X POST -H 'Content-type: application/json' --data "{\"text\": ${question}, \"attachments\" : [{\"text\" : ${request_body}}] }" https://hooks.slack.com/services/$WEBHOOK_SUFFIX
+    request_body="\"${msg//\"}\""
+    links="{\"color\": \"#2eb886\", \"text\" : \"Stats available at http://mooderator-web.cfapps.io/stats\"}"
+    content="{\"color\": \"#2eb886\", \"title\" : \"Results from ${day}\", \"text\" : ${request_body}}"
+
+    curl -X POST -H 'Content-type: application/json' \
+     --data "{\"text\": ${question}, \"attachments\" : [${content}] }" \
+     https://hooks.slack.com/services/$WEBHOOK_SUFFIX
+
     echo "Notification sent"
 }
 
