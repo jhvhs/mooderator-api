@@ -13,7 +13,6 @@ load_daily_stats() {
 }
 
 main() {
-    #TODO day should consider if today is Monday
     day_of_the_week=$(date +%-u)
     day=$(date -v-1d +%F)
 
