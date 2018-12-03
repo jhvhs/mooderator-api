@@ -13,12 +13,12 @@ load_daily_stats() {
 }
 
 main() {
-    day_of_the_week=$(date +%-u)
-    day=$(date -v-1d +%F)
+    day_of_the_week=$(date +'%-w')
+    day=$(date -I)
 
     if [[ day_of_the_week -eq 1 ]]
     then
-        day=$(date -v-3d +%F)
+        day=$(date -I --date='last Fri')
     fi
 
     echo ${day}
