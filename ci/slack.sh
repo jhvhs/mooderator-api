@@ -14,20 +14,18 @@ load_daily_stats() {
 
 main() {
     day_of_the_week=$(date +'%-w')
-    day=$(date -I)
+    yesterday=$(date -I --date='yesterday')
 
     if [[ day_of_the_week -eq 1 ]]
     then
-        day=$(date -I --date='last Fri')
+        yesterday=$(date -I --date='last Fri')
     fi
-
-    echo ${day}
 
     payload=$(load_daily_stats)
 
     question=$(echo ${payload} | jq '.[0] | .question')
 
-    filter="map(select(.day == \"${day}\")) | map(\"\(.answer) \(.results)\") | join(\" - \")"
+    filter="map(select(.day == \"${yesterday}\")) | map(\"\(.answer) \(.results)\") | join(\" - \")"
 
     msg=$(echo ${payload} | jq "${filter}")
 
@@ -38,7 +36,7 @@ main() {
 
     request_body="\"${msg//\"}\""
     links="{\"color\": \"#2eb886\", \"text\" : \"Stats available at http://mooderator-web.cfapps.io/stats\"}"
-    content="{\"color\": \"#2eb886\", \"title\" : \"Results from ${day}\", \"text\" : ${request_body}}"
+    content="{\"color\": \"#2eb886\", \"title\" : \"Results from ${yesterday}\", \"text\" : ${request_body}}"
 
     curl -X POST -H 'Content-type: application/json' \
      --data "{\"text\": ${question}, \"attachments\" : [${content}] }" \
