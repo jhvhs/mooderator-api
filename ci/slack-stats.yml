@@ -1,9 +1,9 @@
 platform: linux
 image_resource:
-        type: docker-image
-        source:
-          repository: pcfkubo/kubo-ci
-          tag: latest
+  type: docker-image
+  source:
+    repository: bu380/mooderator-ci
+    tag: v0.0.1
 
 run:
   path: mooderator-api/ci/slack.sh
