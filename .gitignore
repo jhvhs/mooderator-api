@@ -27,6 +27,6 @@
 
 .envrc
 
-ci/credentials.yml
+ci/credentials*.yml
 
 /target
