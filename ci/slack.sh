@@ -37,9 +37,10 @@ main() {
     request_body="\"${msg//\"}\""
     links="{\"color\": \"#2eb886\", \"text\" : \"Stats available at http://mooderator-web.cfapps.io/stats\"}"
     content="{\"color\": \"#2eb886\", \"title\" : \"Results from ${yesterday}\", \"text\" : ${request_body}}"
+    stats="{\"color\": \"#4286f4\", \"title\" : \"Overall Stats\", \"text\" : \"http://mooderator-web.cfapps.io/stats\"}"
 
     curl -X POST -H 'Content-type: application/json' \
-     --data "{\"text\": ${question}, \"attachments\" : [${content}] }" \
+     --data "{\"text\": ${question}, \"attachments\" : [${content}, ${stats}]}" \
      https://hooks.slack.com/services/$WEBHOOK_SUFFIX
 
     echo "Notification sent"
