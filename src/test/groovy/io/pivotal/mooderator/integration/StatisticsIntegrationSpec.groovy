@@ -45,7 +45,7 @@ class StatisticsIntegrationSpec extends Specification {
         response.statusCode == CREATED
 
         when:
-        response = restTemplate.getForEntity("/results/statistics", List.class)
+        response = restTemplate.getForEntity("/results/daily-statistics", List.class)
 
         then:
         response.statusCode == OK

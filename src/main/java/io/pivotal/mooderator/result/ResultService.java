@@ -1,6 +1,5 @@
 package io.pivotal.mooderator.result;
 
-import io.pivotal.mooderator.question.QuestionService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,12 +10,10 @@ import java.util.List;
 @Service
 public class ResultService {
 
-    private QuestionService questionService;
     private ResultRepository repository;
 
-    public ResultService(ResultRepository repository, QuestionService questionService) {
+    public ResultService(ResultRepository repository) {
         this.repository = repository;
-        this.questionService = questionService;
     }
 
     public Result save(Result result) {
@@ -32,11 +29,5 @@ public class ResultService {
         repository.deleteAll();
     }
 
-    public List<SurveyAnswerStatistics> loadStatistics() {
-        return repository.findSurveyStatistics(questionService.findLastQuestion().getId());
-    }
 
-    public List<SurveyAnswerStatistics> loadDailyStatistics() {
-        return repository.findSurveyStatisticsPerDay(questionService.findLastQuestion().getId());
-    }
 }

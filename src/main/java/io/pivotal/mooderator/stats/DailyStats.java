@@ -1,32 +1,37 @@
-package io.pivotal.mooderator.result;
+package io.pivotal.mooderator.stats;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDate;
-import java.util.Date;
 
-public class SurveyAnswerStatistics {
+@Entity(name = "daily_stats")
+public class DailyStats {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column
     private String question;
+    @Column
     private Long questionId;
+    @Column
     private String answer;
+    @Column
     private Long results;
+    @Column
     private LocalDate day;
 
-    public SurveyAnswerStatistics(String question, Long questionId, String answer, Long results, Date day) {
-        this.question = question;
-        this.questionId = questionId;
-        this.answer = answer;
-        this.results = results;
-        this.day = ((java.sql.Date)day).toLocalDate();
+    public Integer getId() {
+        return id;
     }
 
-    public SurveyAnswerStatistics(String question, Long questionId, String answer, Long results) {
-        this.question = question;
-        this.questionId = questionId;
-        this.answer = answer;
-        this.results = results;
+    public void setId(Integer id) {
+        this.id = id;
     }
-
-    public SurveyAnswerStatistics() {}
 
     public String getQuestion() {
         return question;
