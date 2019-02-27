@@ -6,7 +6,7 @@ databaseChangeLog:
     changes:
         - createView:
               replaceIfExists: true
-              selectQuery: select rownum as id, r.question, r.question_id, r.answer, count(*) as results, truncate(r.sent_date) as day from result r group by r.answer, truncate(r.sent_date) order by day asc
+              selectQuery: select rownum as id, r.question, r.question_id, r.answer, count(*) as results, truncate(r.sent_date) as day from result r group by r.answer, truncate(r.sent_date), r.question, r.question_id order by day asc
               viewName: daily_stats
 
 - changeSet:
@@ -16,5 +16,5 @@ databaseChangeLog:
     changes:
       - createView:
           replaceIfExists: true
-          selectQuery: select ROW_NUMBER() OVER(PARTITION BY r.question) as id, r.question, r.question_id, r.answer, count(*) as results, date(r.sent_date) as day from result r group by r.answer, date(r.sent_date) order by day asc
+          selectQuery: select ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) as id, r.question, r.question_id, r.answer, count(*) as results, date(r.sent_date) as day from result r group by r.answer, date(r.sent_date), r.question, r.question_id order by day asc
           viewName: daily_stats
