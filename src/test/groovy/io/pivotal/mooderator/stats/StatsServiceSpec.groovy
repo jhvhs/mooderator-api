@@ -30,5 +30,31 @@ class StatsServiceSpec extends Specification {
         statistics == expectedStatistics
     }
 
+    def "Should return daily statistics for a question"() {
+        given:
+        def questionId = 1L
+        def question = Optional.of(new Question(id: questionId))
+        def expectedStatistics = [new DailyStats()]
 
+        when:
+        def statistics = service.loadDailyStatisticsForQuestion(questionId)
+
+        then:
+        1 * questionService.findQuestion(questionId) >> question
+        1 * statsRepository.findAllByQuestionId(question.get().id) >> expectedStatistics
+        statistics == expectedStatistics
+    }
+
+    def "Should throw an exception if question does not exist"() {
+        given:
+        def questionId = 1L
+
+        when:
+        service.loadDailyStatisticsForQuestion(questionId)
+
+        then:
+        1 * questionService.findQuestion(questionId) >> Optional.empty()
+        0 * statsRepository._
+        thrown(QuestionNotFoundException)
+    }
 }
