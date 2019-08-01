@@ -39,7 +39,7 @@ main() {
     stats="{\"color\": \"#4286f4\", \"title\" : \"Overall Stats\", \"text\" : \"${WEB_URL}/stats\"}"
 
     curl -X POST -H 'Content-type: application/json' \
-     --data "{\"text\": ${question}, \"attachments\" : [${content}, ${stats}]}" \
+     --data "{\"text\": ${question}, \"attachments\" : [${content}, ${stats}], \"username\": \"M00derator\", \"icon_emoji\": \"harp\"}" \
      "https://hooks.slack.com/services/$WEBHOOK_SUFFIX"
 
     echo "Notification sent"
