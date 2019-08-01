@@ -10,7 +10,7 @@ resources:
 - name: mooderator-api
   type: git
   source:
-    uri: git@github.com:jhvhs/mooderator-api.git
+    uri: https://github.com/jhvhs/mooderator-api.git
     branch: master
 
 jobs:
@@ -23,6 +23,6 @@ jobs:
   - task: slack-stats
     file: mooderator-api/ci/slack-stats.yml
     params:
-      WEBHOOK_SUFFIX: ((webhook_suffix))
+      WEBHOOK_SUFFIX: ((webhook-suffix))
       API_URL: ((mooderator-api-url))
       WEB_URL: ((mooderator-web-url))

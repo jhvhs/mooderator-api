@@ -16,7 +16,7 @@ previous_date() {
         yesterday=$(date -I --date='last Fri')
     fi
 
-    print "$yesterday"
+    printf "%s" "$yesterday"
 }
 
 main() {
