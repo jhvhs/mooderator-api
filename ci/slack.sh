@@ -2,17 +2,12 @@
 
 set -euo pipefail
 
-load_stats() {
-    stats=$(curl 'http://mooderator-api.cfapps.io/results/statistics' -H 'Content-Type: application/json')
-    echo ${stats}
-}
-
 load_daily_stats() {
-    stats=$(curl 'http://mooderator-api.cfapps.io/results/daily-statistics' -H 'Content-Type: application/json')
+    stats=$(curl "${API_URL}"'/results/daily-statistics' -H 'Content-Type: application/json')
     echo ${stats}
 }
 
-main() {
+previous_date() {
     day_of_the_week=$(date +'%-w')
     yesterday=$(date -I --date='yesterday')
 
@@ -21,10 +16,15 @@ main() {
         yesterday=$(date -I --date='last Fri')
     fi
 
-    payload=$(load_daily_stats)
+    print "$yesterday"
+}
 
-    question=$(echo ${payload} | jq '.[0] | .question')
+main() {
+    local payload question filter msg yesterday request_body content stats
 
+    payload="$(load_daily_stats)"
+    yesterday="$(previous_date)"
+    question="$(echo ${payload} | jq '.[0] | .question')"
     filter="map(select(.day == \"${yesterday}\")) | map(\"\(.answer) \(.results)\") | join(\" - \")"
 
     msg=$(echo ${payload} | jq "${filter}")
@@ -35,13 +35,12 @@ main() {
     fi
 
     request_body="\"${msg//\"}\""
-    links="{\"color\": \"#2eb886\", \"text\" : \"Stats available at http://mooderator-web.cfapps.io/stats\"}"
     content="{\"color\": \"#2eb886\", \"title\" : \"Results from ${yesterday}\", \"text\" : ${request_body}}"
-    stats="{\"color\": \"#4286f4\", \"title\" : \"Overall Stats\", \"text\" : \"http://mooderator-web.cfapps.io/stats\"}"
+    stats="{\"color\": \"#4286f4\", \"title\" : \"Overall Stats\", \"text\" : \"${WEB_URL}/stats\"}"
 
     curl -X POST -H 'Content-type: application/json' \
      --data "{\"text\": ${question}, \"attachments\" : [${content}, ${stats}]}" \
-     https://hooks.slack.com/services/$WEBHOOK_SUFFIX
+     "https://hooks.slack.com/services/$WEBHOOK_SUFFIX"
 
     echo "Notification sent"
 }
