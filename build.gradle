@@ -28,7 +28,8 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
 
     compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
-    compile 'mysql:mysql-connector-java:8.0.12'
+    compile('org.postgresql:postgresql:42.2.6')
+
 
     compile('org.liquibase:liquibase-core')
 

@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
-./gradlew build
+set -eu
+
+./gradlew clean build
 cf push

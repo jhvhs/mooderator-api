@@ -4,17 +4,52 @@ databaseChangeLog:
     author: bu3
     dbms: h2
     changes:
-        - createView:
-              replaceIfExists: true
-              selectQuery: select rownum as id, r.question, r.question_id, r.answer, count(*) as results, truncate(r.sent_date) as day from result r group by r.answer, truncate(r.sent_date), r.question, r.question_id order by day asc
-              viewName: daily_stats
+    - createView:
+        replaceIfExists: true
+        selectQuery: |
+          select rownum as id, r.question, r.question_id, r.answer, count(*) as results, truncate(r.sent_date) as day
+          from result r
+          group by r.answer, truncate(r.sent_date), r.question, r.question_id
+          order by day asc
+
+        viewName: daily_stats
 
 - changeSet:
     id: stats-view
     author: bu3
     dbms: mysql
     changes:
-      - createView:
-          replaceIfExists: true
-          selectQuery: select ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) as id, r.question, r.question_id, r.answer, count(*) as results, date(r.sent_date) as day from result r group by r.answer, date(r.sent_date), r.question, r.question_id order by day asc
-          viewName: daily_stats
+    - createView:
+        replaceIfExists: true
+        selectQuery: |
+          select ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000) as id,
+                 r.question,
+                 r.question_id,
+                 r.answer,
+                 count(*)                                 as results,
+                 date(r.sent_date)                        as day
+          from result r
+          group by r.answer, date(r.sent_date), r.question, r.question_id
+          order by day
+
+        viewName: daily_stats
+
+- changeSet:
+    id: stats-view
+    author: jhvhs
+    dbms: postgresql
+    changes:
+    - createView:
+        replaceIfExists: true
+        selectQuery: |
+            SELECT row_number() over (order by (r.sent_date)::date) AS id,
+                   r.question,
+                   r.question_id,
+                   r.answer,
+                   count(*)                                         AS results,
+                   (r.sent_date)::date                              AS day
+            FROM result r
+            GROUP BY r.answer, ((r.sent_date)::date), r.question, r.question_id
+            ORDER BY ((r.sent_date)::date)
+
+        viewName: daily_stats
