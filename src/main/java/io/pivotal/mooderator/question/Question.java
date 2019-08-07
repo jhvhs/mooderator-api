@@ -24,6 +24,7 @@ public class Question {
     private String sentence;
 
     @NotNull
+    @OrderBy("id")
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true,
